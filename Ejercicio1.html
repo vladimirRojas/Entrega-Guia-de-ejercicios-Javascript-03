@@ -1,7 +1,62 @@
-<form>
-    Usuario<input type="text"/>  <br/><br/>
-    Contraseña: <input type="password"/>  <br/><br/>
-    Ingrese valores numericos separados por coma<input type="checkbox"/> <br/><br/>
-    botón de guardar datos: <input type="submit">
-    Muestre un resumen 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Ejercicio 1.css">
+
+    <title>Ejercicio 1</title>
+</head>
+
+<body>
+    <form action="" onsubmit="return false">
+        <label for="numeros">Ingrese números separados por coma:</label><br>
+        <input type="text" name="numeros" id="numeros">
+        <button type="button" onclick="calcular()">Calcular</button>
+        <button type="button" onclick="reiniciar()">Reiniciar</button>
     </form>
+
+    <p id="resumen"></p>
+
+    <script>
+        function calcular() {
+            // La respuesta del usuario en el input
+            // quitando los posibles espacios y generando un array separando por coma
+            let respuesta = (document.getElementById("numeros").value.replace(" ", "")).split(",");
+            // Array vacío para guardar los números
+            let numeros = [];
+
+            // Recorre el arreglo y guarda solo los números en la variable "numeros"
+            respuesta.forEach((numero) => {
+                if (!isNaN(numero)) {
+                    numeros.push(parseInt(numero));
+                };
+            });
+
+            let suma = numeros.reduce((num, next_num) => num + next_num, 0);
+            let media = suma / numeros.length;
+            let mayor = numeros.reduce(function(num, next_num) {
+                return Math.max(num, next_num);
+            });
+            let menor = numeros.reduce(function(num, next_num) {
+                return Math.min(num, next_num);
+            });
+
+            let resumen = `Suma de todos los números: ${!isNaN(suma) ? suma : 0} <br>
+                            Media de todos los números: ${!isNaN(media) ? media : 0} <br>
+                            Número mayor: ${!isNaN(mayor) ? mayor : 0} <br>
+                            Número menor: ${!isNaN(menor) ? menor : 0}`;
+
+            document.getElementById("resumen").innerHTML = resumen;
+        };
+
+        function reiniciar() {
+            document.getElementById("resumen").innerHTML = "";
+            document.getElementById("numeros").value = "";
+        };
+    </script>
+</body>
+
+</html>
